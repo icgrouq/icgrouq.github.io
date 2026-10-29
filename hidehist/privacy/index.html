@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HideHist Privacy Policy</title>
+  <meta name="description" content="Privacy policy of the HideHist Chrome extension.">
+  <link rel="icon" href="../icon.png">
+  <link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<main>
+  <header>
+    <img src="../icon.png" alt="">
+    <div>
+      <h1>HideHist Privacy Policy</h1>
+      <p class="meta">Chrome extension "HideHist — Hide Your History" · Last updated: October 29, 2026</p>
+    </div>
+  </header>
+
+  <div class="card">
+    <p>HideHist keeps the sites you choose out of your browser history. This policy explains what data the extension uses and why.</p>
+    <p><strong>In short:</strong> no data is sent to the developer or to any server. No analytics, no tracking, no ads.</p>
+  </div>
+
+  <h2>What the extension accesses</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th>Permission</th><th>Why it is needed</th></tr></thead>
+      <tbody>
+        <tr><td><code>history</code></td><td>To delete visits to the sites on your list, or all new visits while "Don't save any history" is on.</td></tr>
+        <tr><td><code>tabs</code></td><td>To read the address of the current tab, so that "This domain" / "This page" can add it to the list, and to know when you leave a listed site.</td></tr>
+        <tr><td><code>storage</code></td><td>To save your list and settings in your browser.</td></tr>
+        <tr><td><code>contextMenus</code>, <code>alarms</code></td><td>For the right-click menu and the "don't save history" timer.</td></tr>
+        <tr><td><code>favicon</code></td><td>To show site icons in your list from Chrome's local icon cache. No request is sent to those sites.</td></tr>
+        <tr><td><code>bookmarks</code> (optional)</td><td>Only if you turn on bookmark cleanup: deletes bookmarks of listed sites.</td></tr>
+        <tr><td><code>browsingData</code>, <code>downloads</code> (optional)</td><td>Only if you turn on cookie and download cleanup: clears cookies and site data of listed sites, and removes their entries from the downloads list.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>What is stored, and where</h2>
+  <div class="card">
+    <ul>
+      <li>Your list of sites and your settings are stored <strong>locally in your browser</strong>.</li>
+      <li>If you turn on <strong>Sync</strong> in the settings, the list (not the password) is also stored with your Chrome profile's sync data in your Google account, under Google's own privacy policy. Sync is off by default.</li>
+      <li>The optional password is never stored. Only a salted PBKDF2 hash is kept, locally. The password hides the list from people looking at your screen. It does not encrypt the list.</li>
+    </ul>
+  </div>
+
+  <h2>What is not done</h2>
+  <div class="card">
+    <ul>
+      <li>No data is sent to the developer or to any third-party server.</li>
+      <li>No analytics, tracking, ads or remote code.</li>
+      <li>Your browsing data is never sold or shared.</li>
+    </ul>
+  </div>
+
+  <h2>Actions you start yourself</h2>
+  <div class="card">
+    <ul>
+      <li><strong>Send to Telegram</strong> opens Telegram's public share page (<code>t.me/share/url</code>) in a new tab with the address of the page you chose to share. Nothing is sent until you pick a chat in Telegram.</li>
+      <li><strong>Report a bug</strong> opens your own email app with a draft that contains the extension version, browser, operating system and interface language. Your list of sites is never included, and nothing is sent until you press Send.</li>
+    </ul>
+  </div>
+
+  <h2>Contact</h2>
+  <div class="card">
+    <p>Questions about this policy: <a href="mailto:ic.grouq@gmail.com">ic.grouq@gmail.com</a></p>
+  </div>
+
+  <footer><a href="../">HideHist</a> · <a href="../../">icgrouq</a></footer>
+</main>
+</body>
+</html>

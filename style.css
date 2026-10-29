@@ -1,0 +1,38 @@
+/* Shared look for icgrouq.github.io — same blue palette as HideHist (#021024 #052659 #5483B3 #7DA0CA #C1E8FF). */
+:root {
+  --ink: #021024; --deep: #052659; --mid: #5483B3; --soft: #7DA0CA; --pale: #C1E8FF;
+  --bg: #eef6ff; --fg: #021024; --muted: #3d5677; --card: rgba(255, 255, 255, .7); --stroke: rgba(2, 16, 36, .09); --link: #052659;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #021024; --fg: #C1E8FF; --muted: rgba(193, 232, 255, .68); --card: rgba(125, 160, 202, .08);
+    --stroke: rgba(193, 232, 255, .12); --link: #7DA0CA; color-scheme: dark;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; color: var(--fg); font: 16px/1.65 system-ui, -apple-system, "Segoe UI", sans-serif;
+  background: radial-gradient(70% 50% at 100% 0%, color-mix(in srgb, var(--mid) 45%, transparent), transparent 60%), var(--bg);
+  background-attachment: fixed; min-height: 100vh;
+}
+main { max-width: 760px; margin: 0 auto; padding: 48px 16px 72px; }
+header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; }
+header img { width: 48px; height: 48px; }
+h1 { font: 600 34px/1.15 "Iowan Old Style", Palatino, Georgia, serif; margin: 0; }
+h2 { font: 600 22px/1.25 "Iowan Old Style", Palatino, Georgia, serif; margin: 34px 0 10px; }
+.meta { color: var(--muted); margin: 4px 0 0; font-size: 14px; }
+.card { background: var(--card); border: 1px solid var(--stroke); border-radius: 18px; padding: 6px 22px 20px; backdrop-filter: blur(16px); }
+.card + .card { margin-top: 16px; }
+a { color: var(--link); }
+table { width: 100%; border-collapse: collapse; font-size: 15px; }
+th, td { text-align: left; vertical-align: top; padding: 10px 8px; border-bottom: 1px solid var(--stroke); }
+th { font-weight: 600; }
+td:first-child { white-space: nowrap; }
+code { font: 14px ui-monospace, monospace; padding: 1px 6px; border-radius: 6px; background: var(--stroke); }
+ul { padding-left: 22px; }
+footer { margin-top: 36px; color: var(--muted); font-size: 14px; }
+@media (max-width: 560px) {
+  table, tbody, tr, td, th { display: block; } thead { display: none; }
+  td:first-child { padding-bottom: 0; border-bottom: 0; }
+}
