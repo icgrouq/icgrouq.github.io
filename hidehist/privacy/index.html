@@ -29,9 +29,11 @@
       <thead><tr><th>Permission</th><th>Why it is needed</th></tr></thead>
       <tbody>
         <tr><td><code>history</code></td><td>To delete visits to the sites on your list, or all new visits while "Don't save any history" is on, and to suggest your most visited sites ("Often visited"). The suggestions are computed in your browser and never leave it.</td></tr>
-        <tr><td><code>tabs</code></td><td>To read the address of the current tab, so that "This domain" / "This page" can add it to the list, and to know when you leave a listed site.</td></tr>
+        <tr><td><code>tabs</code></td><td>To read the address of the current tab, so that "This domain" / "This page" can add it to the list, and to know when you leave a listed site, and to close the tabs of listed sites when you press "Close listed tabs".</td></tr>
         <tr><td><code>storage</code></td><td>To save your list and settings in your browser.</td></tr>
         <tr><td><code>contextMenus</code>, <code>alarms</code></td><td>For the right-click menu and the "don't save history" timer.</td></tr>
+        <tr><td><code>idle</code></td><td>Only if you turn on "Close listed tabs when I step away": tells the extension when the screen locks or you have been inactive. Nothing is recorded or sent.</td></tr>
+        <tr><td><code>notifications</code></td><td>To tell you that the link was copied when you share to personal Teams.</td></tr>
         <tr><td><code>favicon</code></td><td>To show site icons in your list from Chrome's local icon cache. No request is sent to those sites.</td></tr>
         <tr><td><code>bookmarks</code> (optional)</td><td>Only if you turn on bookmark cleanup: deletes bookmarks of listed sites.</td></tr>
         <tr><td><code>browsingData</code>, <code>downloads</code> (optional)</td><td>Only if you turn on cookie and download cleanup: clears cookies and site data of listed sites, and removes their entries from the downloads list.</td></tr>
@@ -61,6 +63,8 @@
   <div class="card">
     <ul>
       <li><strong>Send to Telegram</strong> opens Telegram's public share page (<code>t.me/share/url</code>) in a new tab with the address of the page you chose to share. Nothing is sent until you pick a chat in Telegram.</li>
+      <li><strong>Send to WhatsApp</strong> works the same way with WhatsApp's public share link (<code>wa.me</code>): nothing is sent until you pick a chat in WhatsApp.</li>
+      <li><strong>Send to Teams</strong> works the same way with Microsoft's public share page (<code>teams.microsoft.com/share</code>): nothing is sent until you sign in there and pick a chat or channel. For personal Teams, which has no share page, the button copies the address and opens <code>teams.live.com</code>, where you paste it yourself. <strong>Copy link</strong> only puts the page address on your clipboard. Each share button can be turned off in Settings → Sharing.</li>
       <li><strong>Report a bug</strong> opens your own email app with a draft that contains the extension version, browser, operating system and interface language. Your list of sites is never included, and nothing is sent until you press Send.</li>
     </ul>
   </div>
