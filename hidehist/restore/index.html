@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Restore HideHist Pro Key</title>
+  <meta name="description" content="Get your HideHist Pro license key again with your email and order number.">
+  <link rel="icon" href="../icon.png">
+  <link rel="stylesheet" href="../../style.css">
+  <link rel="stylesheet" href="../shop.css">
+</head>
+<body>
+<main>
+  <header>
+    <img src="../icon.png" alt="">
+    <div>
+      <h1>Lost your key?</h1>
+      <p class="meta">Get your HideHist Pro license key again</p>
+    </div>
+  </header>
+
+  <div class="card">
+    <form id="form">
+      <p>Enter the email you used at checkout and the order number from Paddle's receipt email (it looks like <code>325-10001</code> or <code>txn_…</code>).</p>
+      <label for="email">Email</label>
+      <input class="field" id="email" type="email" autocomplete="email" required>
+      <label for="orderNo">Order number</label>
+      <input class="field" id="orderNo" type="text" autocomplete="off" spellcheck="false" required>
+      <p><button class="btn" id="go" type="submit">Get my key</button></p>
+      <p id="msg" role="status"></p>
+    </form>
+    <div id="keyReady" hidden>
+      <p>Your license key:</p>
+      <textarea id="key" class="key" readonly rows="3" aria-label="License key"></textarea>
+      <p><button class="btn" id="copyBtn">Copy key</button></p>
+      <p>Paste it into HideHist → Settings → <strong>HideHist Pro</strong> and press <strong>Activate</strong>.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="meta">Can't find the receipt? Write to <a href="mailto:ic.grouq@gmail.com?subject=HideHist%20Pro%20key">ic.grouq@gmail.com</a> from the email you paid with.</p>
+  </div>
+
+  <footer><a href="../">HideHist</a> · <a href="../pro/">Pro</a> · <a href="../buy/">Buy</a> · <a href="../privacy/">Privacy</a></footer>
+</main>
+
+<script src="../shop.js"></script>
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  $('form').onsubmit = async (e) => {
+    e.preventDefault();
+    $('go').disabled = true;
+    $('msg').className = '';
+    $('msg').textContent = 'Checking your order…';
+    try {
+      const r = await fetch(SHOP.keyApi + '/restore', {
+        method: 'POST', headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ email: $('email').value, order: $('orderNo').value })
+      });
+      const out = await r.json();
+      if (out.key) {
+        $('form').hidden = true;
+        $('key').value = out.key;
+        $('keyReady').hidden = false;
+        return;
+      }
+      $('msg').className = 'err';
+      $('msg').textContent = r.status === 404
+        ? 'No paid order matches this email and order number. Check both and try again.'
+        : 'Something went wrong. Please try again in a minute.';
+    } catch {
+      $('msg').className = 'err';
+      $('msg').textContent = 'No connection. Please try again.';
+    }
+    $('go').disabled = false;
+  };
+  $('copyBtn').onclick = async () => {
+    try { await navigator.clipboard.writeText($('key').value); } catch { $('key').select(); document.execCommand('copy'); }
+    $('copyBtn').textContent = 'Copied';
+  };
+})();
+</script>
+</body>
+</html>

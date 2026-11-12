@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Buy HideHist Pro</title>
+  <meta name="description" content="Buy HideHist Pro: US$4.99, one payment, no subscription.">
+  <link rel="icon" href="../icon.png">
+  <link rel="stylesheet" href="../../style.css">
+  <link rel="stylesheet" href="../shop.css">
+</head>
+<body>
+<main>
+  <header>
+    <img src="../icon.png" alt="">
+    <div>
+      <h1>HideHist Pro</h1>
+      <p class="meta">US$4.99 · one payment · no subscription</p>
+    </div>
+  </header>
+
+  <div class="card" id="buyBox">
+    <p>Unlimited sites, groups, a schedule for "Don't save any history", the panic button, password lock, deep clean, sync and more. You pay once and keep Pro for good, on every computer with your Chrome profile.</p>
+    <p class="meta">The final price, including any sales tax or VAT of your country, is shown at checkout before you pay. <a href="../pro/">Compare Free and Pro</a></p>
+    <p><button class="btn" id="buyBtn" disabled>Buy HideHist Pro</button></p>
+  </div>
+
+  <div class="card" id="keyBox" hidden>
+    <h2>Thank you!</h2>
+    <p id="keyStatus" role="status">Getting your license key…</p>
+    <div id="keyReady" hidden>
+      <p>Your license key:</p>
+      <textarea id="key" class="key" readonly rows="3" aria-label="License key"></textarea>
+      <p><button class="btn" id="copyBtn">Copy key</button></p>
+      <ol>
+        <li>Open HideHist → Settings → <strong>HideHist Pro</strong>.</li>
+        <li>Paste the key and press <strong>Activate</strong>.</li>
+      </ol>
+      <p class="meta">Order number: <code id="order"></code>. Keep Paddle's receipt email: with it you can <a href="../restore/">get the key again</a> at any time.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="meta">Our order process is conducted by our online reseller Paddle.com. Paddle.com is the Merchant of Record for all our orders. Paddle provides all customer service inquiries and handles returns. Refunds within 14 days: see the <a href="../refund/">refund policy</a>.</p>
+  </div>
+
+  <footer><a href="../">HideHist</a> · <a href="../pro/">Pro</a> · <a href="../restore/">Lost your key?</a> · <a href="../terms/">Terms</a> · <a href="../refund/">Refunds</a> · <a href="../privacy/">Privacy</a></footer>
+</main>
+
+<script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
+<script src="../shop.js"></script>
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  let gettingKey = false;
+
+  async function showKey(txn) {
+    if (gettingKey) return;
+    gettingKey = true;
+    $('buyBox').hidden = true;
+    $('keyBox').hidden = false;
+    $('order').textContent = txn;
+    // right after payment Paddle may still be finishing the order, so ask again for about a minute
+    for (let i = 0; i < 20; i++) {
+      try {
+        const r = await fetch(SHOP.keyApi + '/key?txn=' + encodeURIComponent(txn));
+        const out = await r.json();
+        if (out.key) {
+          $('key').value = out.key;
+          $('keyStatus').textContent = 'The key is made for ' + out.email + '.';
+          $('keyReady').hidden = false;
+          return;
+        }
+        if (r.status !== 409 && r.status !== 502) break;
+      } catch { /* network: try again */ }
+      await new Promise((ok) => setTimeout(ok, 3000));
+    }
+    $('keyStatus').innerHTML = 'Your payment went through, but the key is not ready yet. Please try <a href="../restore/">getting it here</a> in a few minutes with the order number <code></code> and your email, or write to <a href="mailto:ic.grouq@gmail.com?subject=HideHist%20Pro%20key">ic.grouq@gmail.com</a>.';
+    $('keyStatus').querySelector('code').textContent = txn;
+    gettingKey = false;
+  }
+
+  if (SHOP.sandbox) Paddle.Environment.set('sandbox');
+  Paddle.Initialize({
+    token: SHOP.token,
+    eventCallback(ev) {
+      if (ev.name === 'checkout.completed' && ev.data && ev.data.transaction_id) {
+        setTimeout(() => Paddle.Checkout.close(), 1500);
+        showKey(ev.data.transaction_id);
+      }
+    }
+  });
+  $('buyBtn').disabled = false;
+  $('buyBtn').onclick = () => Paddle.Checkout.open({
+    items: [{ priceId: SHOP.priceId, quantity: 1 }],
+    settings: { displayMode: 'overlay', variant: 'one-page' }
+  });
+  $('copyBtn').onclick = async () => {
+    try { await navigator.clipboard.writeText($('key').value); } catch { $('key').select(); document.execCommand('copy'); }
+    $('copyBtn').textContent = 'Copied';
+  };
+
+  // ?txn=... (for example a link from support) shows the key of that order
+  const txn = new URLSearchParams(location.search).get('txn');
+  if (txn) showKey(txn);
+})();
+</script>
+</body>
+</html>
