@@ -31,12 +31,12 @@
     <div id="keyReady" hidden>
       <p>Your license key:</p>
       <textarea id="key" class="key" readonly rows="3" aria-label="License key"></textarea>
-      <p><button class="btn" id="copyBtn">Copy key</button></p>
+      <p><button class="btn" id="copyBtn">Copy key</button><a class="btn ghost" id="mailBtn" href="#">Email the key to myself</a></p>
       <ol>
         <li>Open HideHist → Settings → <strong>HideHist Pro</strong>.</li>
         <li>Paste the key and press <strong>Activate</strong>.</li>
       </ol>
-      <p class="meta">Order number: <code id="order"></code>. Keep Paddle's receipt email: with it you can <a href="../restore/">get the key again</a> at any time.</p>
+      <p class="meta">Order number: <code id="order"></code>. Email the key to yourself or keep Paddle's receipt: with the order number you can <a href="../restore/">get the key again</a> at any time.</p>
     </div>
   </div>
 
@@ -68,6 +68,7 @@
         if (out.key) {
           $('key').value = out.key;
           $('keyStatus').textContent = 'The key is made for ' + out.email + '.';
+          $('mailBtn').href = keyMailLink(out.email, out.key, txn);
           $('keyReady').hidden = false;
           return;
         }

@@ -32,7 +32,7 @@
     <div id="keyReady" hidden>
       <p>Your license key:</p>
       <textarea id="key" class="key" readonly rows="3" aria-label="License key"></textarea>
-      <p><button class="btn" id="copyBtn">Copy key</button></p>
+      <p><button class="btn" id="copyBtn">Copy key</button><a class="btn ghost" id="mailBtn" href="#">Email the key to myself</a></p>
       <p>Paste it into HideHist → Settings → <strong>HideHist Pro</strong> and press <strong>Activate</strong>.</p>
     </div>
   </div>
@@ -62,6 +62,7 @@
       if (out.key) {
         $('form').hidden = true;
         $('key').value = out.key;
+        $('mailBtn').href = keyMailLink(out.email, out.key, $('orderNo').value.trim());
         $('keyReady').hidden = false;
         return;
       }
