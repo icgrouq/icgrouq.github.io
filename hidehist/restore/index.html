@@ -69,7 +69,8 @@
       $('msg').className = 'err';
       $('msg').textContent = r.status === 404
         ? 'No paid order matches this email and order number. Check both and try again.'
-        : 'Something went wrong. Please try again in a minute.';
+        : r.status === 410 ? 'This order was refunded, so it has no license key.'
+          : 'Something went wrong. Please try again in a minute.';
     } catch {
       $('msg').className = 'err';
       $('msg').textContent = 'No connection. Please try again.';

@@ -72,6 +72,10 @@
           $('keyReady').hidden = false;
           return;
         }
+        if (r.status === 410) {
+          $('keyStatus').textContent = 'This order was refunded, so it has no license key.';
+          return;
+        }
         if (r.status !== 409 && r.status !== 502) break;
       } catch { /* network: try again */ }
       await new Promise((ok) => setTimeout(ok, 3000));
@@ -94,7 +98,7 @@
   $('buyBtn').disabled = false;
   $('buyBtn').onclick = () => Paddle.Checkout.open({
     items: [{ priceId: SHOP.priceId, quantity: 1 }],
-    settings: { displayMode: 'overlay', variant: 'one-page' }
+    settings: { displayMode: 'overlay', variant: 'one-page', locale: checkoutLocale() }
   });
   $('copyBtn').onclick = async () => {
     try { await navigator.clipboard.writeText($('key').value); } catch { $('key').select(); document.execCommand('copy'); }

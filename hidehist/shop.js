@@ -7,6 +7,13 @@ const SHOP = {
   keyApi: 'https://hidehist-keys.icgroup.workers.dev'
 };
 
+// Paddle's checkout, and its emails after it, follow the buyer's browser language. Ukrainian browsers got Russian
+// (Paddle shows no Ukrainian), so Ukrainian and Russian get English; the other HideHist languages stay.
+function checkoutLocale() {
+  const lang = (navigator.language || 'en').slice(0, 2).toLowerCase();
+  return ['en', 'de', 'es', 'fr', 'it', 'pl', 'pt'].includes(lang) ? lang : 'en';
+}
+
 // A ready email to the buyer's own address with the key, so it is kept even if Paddle's receipt is lost.
 // It only opens the buyer's mail app; nothing is sent from here.
 function keyMailLink(email, key, order) {
